@@ -40,7 +40,7 @@ describe('loo routes', () => {
     pool.end();
   });
 
-  it('POST api/v1/loos should create a new loo', async () => {
+  it('POST /api/v1/loos should create a new loo', async () => {
     const [agent] = await registerAndLogin();
     const res = await agent.post('/api/v1/loos').send(mockLoo);
     // expect(res.status).toBe(200);
@@ -51,7 +51,7 @@ describe('loo routes', () => {
     });
   });
 
-  it('GET api/v1/loos should return a list of loos', async () => {
+  it('GET /api/v1/loos should return a list of loos', async () => {
     const res = await request(app).get('/api/v1/loos');
     expect(res.status).toBe(200);
     expect(res.body[0]).toEqual({
@@ -62,4 +62,16 @@ describe('loo routes', () => {
       review_id: null,
     });
   });
+
+  it('GET /api/v1/loos/:id should get a single loo', async () => {
+    const insertLooRes = await request(app).post('/api/v1/loos').send(mockLoo);
+    expect(insertLooRes.status).toBe(200);
+    const res = await request(app).get(`/api/v1/loos/${insertLooRes.body.id}`);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      created_at: expect.any(String),
+      ...mockLoo,
+    })
+  })
 });
