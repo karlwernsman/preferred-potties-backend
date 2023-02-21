@@ -11,10 +11,10 @@ const app = require('../lib/app');
 //   password: '12345',
 // };
 
-const mockLoo = {
-  description: 'This loo is nice!',
-  rating: 5,
-};
+// const mockLoo = {
+//   description: 'This loo is nice!',
+//   rating: 5,
+// };
 
 // const registerAndLogin = async (userProps = {}) => {
 //   const password = userProps.password ?? mockUser.password;
