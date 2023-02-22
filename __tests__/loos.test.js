@@ -64,7 +64,8 @@ describe('loo routes', () => {
   });
 
   it('GET /api/v1/loos/:id should get a single loo', async () => {
-    const insertLooRes = await request(app).post('/api/v1/loos').send(mockLoo);
+    const [agent] = await registerAndLogin();
+    const insertLooRes = await agent.post('/api/v1/loos').send(mockLoo);
     expect(insertLooRes.status).toBe(200);
     const res = await request(app).get(`/api/v1/loos/${insertLooRes.body.id}`);
     expect(res.status).toBe(200);
@@ -72,6 +73,6 @@ describe('loo routes', () => {
       id: expect.any(String),
       created_at: expect.any(String),
       ...mockLoo,
-    })
-  })
+    });
+  });
 });
