@@ -3,6 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const UserService = require('../lib/services/UserService');
+const Loo = require('../lib/models/Loo.js');
 
 const mockUser = {
   username: 'User',
@@ -73,6 +74,24 @@ describe('loo routes', () => {
       id: expect.any(String),
       created_at: expect.any(String),
       ...mockLoo,
+    });
+  });
+
+  it('UPDATE /api/v1/loos/:id should update a loo', async () => {
+    const [agent] = await registerAndLogin();
+    const loo = await Loo.insert({
+      description: 'This loo is nice!',
+      rating: '5',
+      review_id: null,
+    });
+    console.log(loo);
+    const res = await agent.put(`/api/v1/loos/${loo.id}`).send({ rating: '3' });
+    // expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      ...mockLoo,
+      rating: '3',
+      id: expect.any(String),
+      created_at: expect.any(String),
     });
   });
 });
