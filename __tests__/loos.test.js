@@ -84,14 +84,22 @@ describe('loo routes', () => {
       rating: '5',
       review_id: null,
     });
-    console.log(loo);
     const res = await agent.put(`/api/v1/loos/${loo.id}`).send({ rating: '3' });
-    // expect(res.status).toBe(200);
+    expect(res.status).toBe(200);
     expect(res.body).toEqual({
       ...mockLoo,
       rating: '3',
       id: expect.any(String),
       created_at: expect.any(String),
     });
+  });
+
+  it('DELETE /api/v1/loos/:id should delete a loo', async () => {
+    const [agent] = await registerAndLogin();
+    const insertLooRes = await Loo.insert(mockLoo);
+    const deleteLooRes = await agent.delete('/api/v1/loos/' + insertLooRes.id);
+    expect(deleteLooRes.status).toBe(200);
+    const check = await Loo.getById(insertLooRes.id);
+    expect(check).toBeNull();
   });
 });
