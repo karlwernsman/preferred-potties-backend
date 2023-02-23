@@ -3,6 +3,7 @@ const setup = require('../data/setup');
 const app = require('../lib/app');
 const request = require('supertest');
 const UserService = require('../lib/services/UserService.js');
+const Review = require('../lib/models/Review.js');
 
 const mockUser = {
   username: 'User',
@@ -57,10 +58,14 @@ describe('reviews routes', () => {
 
   it('GET /api/v1/reviews/:id should get a single review', async () => {
     const [agent] = await registerAndLogin();
-    const insertReviewRes = await agent.post('/api/v1/reviews').send(mockReview);
+    const insertReviewRes = await agent
+      .post('/api/v1/reviews')
+      .send(mockReview);
     expect(insertReviewRes.status).toBe(200);
     console.log(insertReviewRes.body);
-    const res = await request(app).get(`/api/v1/reviews/${insertReviewRes.body.id}`);
+    const res = await request(app).get(
+      `/api/v1/reviews/${insertReviewRes.body.id}`
+    );
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
       id: expect.any(String),
@@ -84,6 +89,21 @@ describe('reviews routes', () => {
       sanitizer: expect.any(Boolean),
       amenities: expect.any(String),
       comments: expect.any(String),
+    });
+  });
+
+  it('UPDATE /api/v1/reviews/:id should update a review', async () => {
+    const [agent] = await registerAndLogin();
+    const review = await Review.insert(mockReview);
+    const res = await agent
+      .put(`/api/v1/reviews/${review.id}`)
+      .send({ comments: 'A real dump' });
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      ...mockReview,
+      comments: 'A real dump',
+      id: expect.any(String),
+      created_at: expect.any(String),
     });
   });
 });
