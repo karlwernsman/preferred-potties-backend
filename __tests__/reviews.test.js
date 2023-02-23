@@ -62,7 +62,6 @@ describe('reviews routes', () => {
       .post('/api/v1/reviews')
       .send(mockReview);
     expect(insertReviewRes.status).toBe(200);
-    console.log(insertReviewRes.body);
     const res = await request(app).get(
       `/api/v1/reviews/${insertReviewRes.body.id}`
     );
@@ -105,5 +104,15 @@ describe('reviews routes', () => {
       id: expect.any(String),
       created_at: expect.any(String),
     });
+  });
+
+  it('DELETE /api/v1/reviews/:id should delete a review', async () => {
+    //come back and add authorization?
+    const [agent] = await registerAndLogin();
+    const addReview = await Review.insert(mockReview);
+    const deleteReview = await agent.delete('/api/v1/reviews/' + addReview.id);
+    expect(deleteReview.status).toBe(200);
+    const check = await Review.getById(addReview.id);
+    expect(check).toBeNull();
   });
 });
