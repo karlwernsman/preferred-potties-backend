@@ -37,7 +37,7 @@ describe('loo routes', () => {
   it('POST /api/v1/loos should create a new loo', async () => {
     const [agent] = await registerAndLogin();
     const res = await agent.post('/api/v1/loos').send(mockLoo);
-    // expect(res.status).toBe(200);
+    expect(res.status).toBe(200);
     expect(res.body).toEqual({
       id: expect.any(String),
       created_at: expect.any(String),

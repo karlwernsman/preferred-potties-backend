@@ -11,9 +11,9 @@ const mockUser = {
 };
 
 const mockReview = {
-  cleanliness: 5,
-  safety: 5,
-  accessibility: 5,
+  cleanliness: '5',
+  safety: '5',
+  accessibility: '5',
   gendered: true,
   locks: true,
   sanitizer: true,
@@ -58,14 +58,32 @@ describe('reviews routes', () => {
   it('GET /api/v1/reviews/:id should get a single review', async () => {
     const [agent] = await registerAndLogin();
     const insertReviewRes = await agent.post('/api/v1/reviews').send(mockReview);
-    // expect(insertReviewRes.status).toBe(200);
+    expect(insertReviewRes.status).toBe(200);
     console.log(insertReviewRes.body);
     const res = await request(app).get(`/api/v1/reviews/${insertReviewRes.body.id}`);
-    // expect(res.status).toBe(200);
+    expect(res.status).toBe(200);
     expect(res.body).toEqual({
       id: expect.any(String),
       created_at: expect.any(String),
       ...mockReview,
+    });
+  });
+
+  it('POST /api/v1/reviews should create a new review', async () => {
+    const [agent] = await registerAndLogin();
+    const res = await agent.post('/api/v1/reviews').send(mockReview);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      created_at: expect.any(String),
+      safety: expect.any(String),
+      accessibility: expect.any(String),
+      cleanliness: expect.any(String),
+      gendered: expect.any(Boolean),
+      locks: expect.any(Boolean),
+      sanitizer: expect.any(Boolean),
+      amenities: expect.any(String),
+      comments: expect.any(String),
     });
   });
 });
