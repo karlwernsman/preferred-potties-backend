@@ -20,7 +20,7 @@ CREATE TABLE reviews (
   gendered boolean NOT NULL,
   locks boolean NOT NULL,
   sanitizer boolean NOT NULL,
-  ammenities VARCHAR(100),
+  amenities VARCHAR(100),
   comments VARCHAR(250)
 );
 
@@ -40,3 +40,10 @@ VALUES
 ('Nice', 5),
 ('Ugly', 1),
 ('Really stinky', 2);
+
+INSERT INTO
+reviews(cleanliness, safety, accessibility, gendered, locks,
+sanitizer, amenities, comments)
+VALUES
+(5, 5, 3, true, true, false, 'Test review', 'Test review'),
+(5, 5, 3, true, true, false, 'Test review', 'Test review');
