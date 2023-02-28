@@ -8,7 +8,7 @@ CREATE TABLE users (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   email VARCHAR NOT NULL,
   password_hash VARCHAR NOT NULL,
-  username VARCHAR NOT NULL
+  username VARCHAR
 );
 
 CREATE TABLE reviews (
