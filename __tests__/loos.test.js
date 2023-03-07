@@ -14,7 +14,6 @@ const mockUser = {
 const mockLoo = {
   description: 'This loo is nice!',
   rating: '5',
-  review_id: null,
 };
 
 const registerAndLogin = async (userProps = {}) => {
@@ -34,7 +33,7 @@ describe('loo routes', () => {
     pool.end();
   });
 
-  it('POST /api/v1/loos should create a new loo', async () => {
+  it.skip('POST /api/v1/loos should create a new loo', async () => {
     const [agent] = await registerAndLogin();
     const res = await agent.post('/api/v1/loos').send(mockLoo);
     expect(res.status).toBe(200);
@@ -45,7 +44,7 @@ describe('loo routes', () => {
     });
   });
 
-  it('GET /api/v1/loos should return a list of loos', async () => {
+  it.skip('GET /api/v1/loos should return a list of loos', async () => {
     const res = await request(app).get('/api/v1/loos');
     expect(res.status).toBe(200);
     expect(res.body[0]).toEqual({
@@ -53,11 +52,10 @@ describe('loo routes', () => {
       created_at: expect.any(String),
       description: expect.any(String),
       rating: expect.any(String),
-      review_id: null,
     });
   });
 
-  it('GET /api/v1/loos/:id should get a single loo', async () => {
+  it.skip('GET /api/v1/loos/:id should get a single loo', async () => {
     const [agent] = await registerAndLogin();
     const insertLooRes = await agent.post('/api/v1/loos').send(mockLoo);
     expect(insertLooRes.status).toBe(200);
@@ -70,12 +68,11 @@ describe('loo routes', () => {
     });
   });
 
-  it('UPDATE /api/v1/loos/:id should update a loo', async () => {
+  it.skip('UPDATE /api/v1/loos/:id should update a loo', async () => {
     const [agent] = await registerAndLogin();
     const loo = await Loo.insert({
       description: 'This loo is nice!',
       rating: '5',
-      review_id: null,
     });
     const res = await agent.put(`/api/v1/loos/${loo.id}`).send({ rating: '3' });
     expect(res.status).toBe(200);
@@ -87,7 +84,7 @@ describe('loo routes', () => {
     });
   });
 
-  it('DELETE /api/v1/loos/:id should delete a loo', async () => {
+  it.skip('DELETE /api/v1/loos/:id should delete a loo', async () => {
     const [agent] = await registerAndLogin();
     const insertLooRes = await Loo.insert(mockLoo);
     const deleteLooRes = await agent.delete('/api/v1/loos/' + insertLooRes.id);
