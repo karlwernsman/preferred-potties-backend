@@ -1,27 +1,17 @@
-# Template for Backend Express
+# Preferred Potties Backend
 
-The Golden Rule:
-🦸 🦸‍♂️ Stop starting and start finishing. 🏁
+This repository contains the backend code for the Preferred Potties flutter application (Loocater). It provides the necessary APIs and functionalities to support user authentication, restroom data management, and user reviews.
 
-If you work on more than one feature at a time, you are guaranteed to multiply your bugs and your anxiety.
+## Features
 
-## Scripts
+- User authentication: Allows users to register, log in, and manage their accounts.
+- Restroom management: Enables administrators to add, update, and delete restroom data.
+- User reviews: Allows users to submit reviews for restrooms.
+- API documentation: Provides comprehensive documentation for all available API endpoints.
 
-| command                | description                                                                         |
-| ---------------------- | ----------------------------------------------------------------------------------- |
-| `npm start`            | starts the app - should only be used in production as changes will not get reloaded |
-| `npm run start:watch`  | runs the app using `nodemon` which watches for changes and reloads the app          |
-| `npm test`             | runs the tests once                                                                 |
-| `npm run test:watch`   | continually watches and runs the tests when files are updated                       |
-| `npm run setup-db`     | sets up the database locally                                                        |
-| `npm run setup-heroku` | sets up the database on heroku                                                      |
+## Technologies Used
 
-## User Routes
-
-| Route                    | HTTP Method | HTTP Body                                                                              | Description                                        |
-| ------------------------ | ----------- | -------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| `/api/v1/users/`         | `POST`      | `{email: 'example@test.com', password: '123456', firstName: 'Test', lastName: 'User'}` | Creates new user                                   |
-| `api/v1/users/sessions/` | `POST`      | `{email: 'example@test.com', password: '123456'}`                                      | Signs in existing user                             |
-| `/api/v1/users/me/`      | `GET`       | None                                                                                   | Returns current user                               |
-| `/api/v1/users/`         | `GET`       | None                                                                                   | Authorized endpoint - returns all users for admin. |
-| `api/v1/users/sessions/` | `DELETE`    | None                                                                                   | Deletes a user session                             |
+- Node.js: A JavaScript runtime environment that executes server-side code.
+- Express.js: A web application framework for Node.js that simplifies the development of APIs.
+- JSON Web Tokens (JWT): Used for authentication and authorization purposes.
+- Heroku: A cloud platform that hosts the backend server.
